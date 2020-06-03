@@ -47,12 +47,13 @@ function draw() {
     background(0);
     fill(255);
     moveBall();
+    movePaddle()
     paddlesR.bounceBall();
     paddlesR.drawElements();
-    paddlesR.movePaddle()
+
     paddlesL.bounceBall();
     paddlesL.drawElements();
-    paddlesL.movePaddle()
+
 }
 
 
@@ -69,6 +70,11 @@ function resetBall() {
 
 }
 
+function movePaddle() {
+    paddlesR = mouseY;
+    paddlesL = mouseX;
+}
+
 class Paddles {
     constructor(x, y, width, height) {
         this.x = x;
@@ -78,9 +84,8 @@ class Paddles {
     }
 
     drawElements() {
-        this.y = mouseY;
-        this.y = mouseX;
-        rect(this.x, this.y, this.width, this.height);
+        paddleR = mouseY;
+        paddleL = mouseX;
         rect(this.x, this.y, this.width, this.height);
         ellipse(ball.x, ball.y, ball.radius);
         textSize(100);
@@ -104,13 +109,7 @@ class Paddles {
             ball.speedY = random(-5, 5);
         }
 
-        // Detection de collision Paddle Left
-        if (ball.x <= this.x + this.width * 2 &&
-            ball.y >= this.y - this.height / 2 &&
-            ball.y <= this.y + this.height / 2) {
-            ball.speedX = -ball.speedX;
-            ball.speedY = random(-5, 5);
-        }
+
 
         // Detection collision "murs" haut et bas
         if (ball.y <= ball.radius || ball.y >= height - ball.radius) {
@@ -126,10 +125,7 @@ class Paddles {
         }
     }
 
-    movePaddle() {
-        this.y = mouseY;
-        this.y = mouseX;
-    }
+
 
 
 }
