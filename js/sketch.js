@@ -29,7 +29,7 @@ let paddleRight;
 
 let balls = [];
 
-
+let h = 255;
 
 
 function setup() {
@@ -37,19 +37,26 @@ function setup() {
     noStroke();
 
     paddleRight = new Paddle(width - 30, 0, 20, random(50, 200), 'vertical'); //right
+
+
     paddleLeft = new Paddle(30, 0, 20, random(50, 200), 'horizontal'); //left
 
     paddles.push(paddleRight); //pousse les variables dans le tableau paddles
     paddles.push(paddleLeft); //pousse les variables dans le tableau paddles
 
+
+
     for (let i = 0; i < 1; i += 1) {
         balls[i] = new Ball(width / 2, height / 2, 30, 10, 0);
     }
+
+    colorMode(HSB, 255);
 }
 
 function draw() {
-    background(0);
-    fill(255);
+    colorMode(HSB, 255);
+    background(h, 190, 250);
+    fill(255, 255, 0);
     drawElements();
     for (let i = 0; i < paddles.length; i += 1) {
         paddles[i].afficher();
@@ -61,6 +68,10 @@ function draw() {
         balls[i].bouger();
         balls[i].rebondir();
         balls[i].score();
+    }
+
+    if (balls.rebondir == true) {
+        h = h + 20;
     }
 }
 
@@ -91,6 +102,14 @@ class Paddle {
         // if (scoreLeft && scoreRight == 1) {
         rect(this.x, this.y, this.width, this.height);
         // }
+        //
+        // if (scoreLeft > 5) {
+        //     rect(this.x, this.y, this.width, this.height + 80);
+        // }
+        //
+        // if (scoreRight > 5) {
+        //     rect(this.x, this.y, this.width, this.height + 80);
+        // }
     }
 
     bouger() {
@@ -99,12 +118,23 @@ class Paddle {
         } else if (this.axis == 'horizontal') {
             this.y = mouseX;
         }
+
+        // if (scoreRight > 10 && this.axis == 'horizontal') {
+        //     this.y = mouseY;
+        // }
+        // if (scoreLeft > 10 && this.axis == 'vertical') {
+        //     this.y = mouseX;
+        // }
     }
 
 }
 
+function addPaddle() {
+    paddles.push(new Paddle(width / 2, height - 30, 20, random(50, 200), 'horizontal'))
+}
+
 function addBall() {
-    balls.push(new Ball(width / 2, height / 2, random(-30, 30), 10, 0));
+    balls.push(new Ball(width / 2, height / 2, random(15, 30), random(10, -10), random(10, -10)));
 }
 
 class Ball {
@@ -116,16 +146,22 @@ class Ball {
         this.speedY = _speedY;
         this.distances = [];
         this.enabled = true;
-        this.col = color(255, 255, 255);
+
     }
 
     afficher() {
-        fill(this.col);
+        fill(255, 255, 255);
         ellipse(this.x, this.y, this.radius);
     }
     bouger() {
         this.x += this.speedX;
         this.y += this.speedY;
+
+        // if (scoreLeft | scoreRight > 8) {
+        //     this.x += this.speedX + 10;
+        //     this.y += this.speedY + 10;
+        // }
+
     }
 
     rebondir() {
@@ -135,8 +171,9 @@ class Ball {
                 this.x - this.radius / 2 < paddles[i].x + paddles[i].width &&
                 this.y > paddles[i].y && this.y < paddles[i].y + paddles[i].height) {
                 // addBall();
-                this.speedX = -this.speedX;
-                this.speedY = random(-5, 5);
+                // this.speedX = -this.speedX;
+                // this.speedY = random(-5, 5);
+                h = h + 30;
 
             }
         }
@@ -152,12 +189,17 @@ class Ball {
             scoreRight += 1;
             addBall();
             this.enabled = false;
+
         } else if (this.enabled && this.x > width) {
             scoreLeft += 1;
             addBall();
             this.enabled = false;
+
         }
+
+
     }
+
 }
 
 function windowResized() {
