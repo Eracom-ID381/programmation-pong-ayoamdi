@@ -39,10 +39,10 @@ function setup() {
     paddleRight = new Paddle(width - 30, 0, 20, 150, 'vertical'); //right
     paddleLeft = new Paddle(30, 0, 20, 150, 'horizontal'); //left
 
-    paddles.push(paddleRight);
-    paddles.push(paddleLeft);
+    paddles.push(paddleRight); //pousse les variables dans le tableau paddles
+    paddles.push(paddleLeft); //pousse les variables dans le tableau paddles
 
-    for (let i = 0; i < 1000; i += 1) { 
+    for (let i = 0; i < 1000; i += 1) {
         balls[i] = new Ball(width / 2, height / 2, 30, 10, 0);
     }
 }
@@ -51,11 +51,11 @@ function draw() {
     background(0);
     fill(255);
     drawElements();
-    for (let i = 0; i < paddles.length; i += 1) { 
+    for (let i = 0; i < paddles.length; i += 1) {
         paddles[i].afficher();
         paddles[i].bouger();
     }
-   
+
     for (let i = 0; i < balls.length; i += 1) {
         balls[i].afficher();
         balls[i].bouger();
@@ -87,14 +87,14 @@ class Paddle {
         this.height = height;
         this.axis = axis;
     }
-    afficher() { 
+    afficher() {
         rect(this.x, this.y, this.width, this.height);
     }
 
-    bouger() { 
+    bouger() {
         if (this.axis == 'vertical') {
             this.y = mouseY;
-        } else if (this.axis == 'horizontal') { 
+        } else if (this.axis == 'horizontal') {
             this.y = mouseX;
         }
     }
@@ -102,7 +102,7 @@ class Paddle {
 }
 
 function addBall() {
-    balls.push(new Ball(width/2, height/2, 30, random(-10, 10), 0));
+    balls.push(new Ball(width / 2, height / 2, 30, random(-10, 10), 0));
 }
 
 class Ball {
@@ -114,7 +114,7 @@ class Ball {
         this.speedY = _speedY;
         this.distances = [];
         this.enabled = true;
-        this.col = color(255,255,255);
+        this.col = color(255, 255, 255);
     }
 
     afficher() {
