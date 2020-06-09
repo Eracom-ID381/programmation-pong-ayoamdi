@@ -36,13 +36,13 @@ function setup() {
     createCanvas(window.innerWidth, window.innerHeight);
     noStroke();
 
-    paddleRight = new Paddle(width - 30, 0, 20, 150, 'vertical'); //right
-    paddleLeft = new Paddle(30, 0, 20, 150, 'horizontal'); //left
+    paddleRight = new Paddle(width - 30, 0, 20, random(50, 200), 'vertical'); //right
+    paddleLeft = new Paddle(30, 0, 20, random(50, 200), 'horizontal'); //left
 
     paddles.push(paddleRight); //pousse les variables dans le tableau paddles
     paddles.push(paddleLeft); //pousse les variables dans le tableau paddles
 
-    for (let i = 0; i < 1000; i += 1) {
+    for (let i = 0; i < 1; i += 1) {
         balls[i] = new Ball(width / 2, height / 2, 30, 10, 0);
     }
 }
@@ -88,7 +88,9 @@ class Paddle {
         this.axis = axis;
     }
     afficher() {
+        // if (scoreLeft && scoreRight == 1) {
         rect(this.x, this.y, this.width, this.height);
+        // }
     }
 
     bouger() {
@@ -102,7 +104,7 @@ class Paddle {
 }
 
 function addBall() {
-    balls.push(new Ball(width / 2, height / 2, 30, random(-10, 10), 0));
+    balls.push(new Ball(width / 2, height / 2, random(-30, 30), 10, 0));
 }
 
 class Ball {
@@ -132,8 +134,10 @@ class Ball {
             if (this.x + this.radius / 2 > paddles[i].x &&
                 this.x - this.radius / 2 < paddles[i].x + paddles[i].width &&
                 this.y > paddles[i].y && this.y < paddles[i].y + paddles[i].height) {
+                // addBall();
                 this.speedX = -this.speedX;
                 this.speedY = random(-5, 5);
+
             }
         }
 
