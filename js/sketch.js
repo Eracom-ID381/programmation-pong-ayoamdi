@@ -133,7 +133,11 @@ class Paddle {
 }
 
 function addPaddleLeft() {
-    paddles.push(new Paddle(width - 30, 0, random(50, 200), 'horizontal', true))
+    paddles.push(new Paddle(width - 50, random(50, 200), random(50, 200), 'horizontal', true))
+}
+
+function addPaddleRight() {
+    paddles.push(new Paddle(width - 50, random(50, 200), random(50, 200), 'horizontal', true))
 }
 
 function addBall() {
@@ -189,7 +193,8 @@ class Ball {
     score() {
         if (this.enabled && this.x < 0) {
             scoreRight += 1;
-            paddleRight = new Paddle(width - 30, 0, random(50, 200), random(50, 200), 'vertical', true);
+            // paddleRight = new Paddle(width - 30, 0, random(50, 200), random(50, 200), 'vertical', true);
+            addPaddleLeft()
             addBall();
             //addPaddleLeft();
 
@@ -197,7 +202,8 @@ class Ball {
 
         } else if (this.enabled && this.x > width) {
             scoreLeft += 1;
-            paddleLeft = new Paddle(width - 30, 0, random(50, 200), random(50, 200), 'horizontal', true);
+            // paddleLeft = new Paddle(width - 30, 0, random(50, 200), random(50, 200), 'horizontal', true);
+            addPaddleLeft()
             addBall();
 
             this.enabled = false;
